@@ -1,0 +1,12 @@
+[
+    {
+      "email": "admin@example.com",
+      "password": "$2a$10$XyiCvV26Q8H.W3y./sEJV.4v5GCBUBzQGBt.2GJirK52O7fCvHltq",
+      "role": "admin"
+    },
+    {
+      "email": "user@example.com",
+      "password": "$2a$10$NhhTWIiwWPKj25VPRR/Z8ub5buA.DG0n0dHVxtz50zP7cDfRbfC9m",
+      "role": "user"
+    }
+  ]

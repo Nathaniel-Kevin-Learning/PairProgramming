@@ -1,0 +1,16 @@
+[
+    {
+      "fullName": "Admin User",
+      "address": "123 Admin Street, Admin City",
+      "gender": "Male",
+      "age": 30,
+      "UserId": 1
+    },
+    {
+      "fullName": "Regular User",
+      "address": "456 User Avenue, User Town",
+      "gender": "Female",
+      "age": 25,
+      "UserId": 2
+    }
+  ]
