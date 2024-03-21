@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           msg:'shortDescription is required'
         },
         maximalWord(value){
-          if (value.length>50) {
+          if (value.split(" ").length>50) {
             throw new Error("maximal character is 50 words")
           }
         },

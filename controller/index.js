@@ -206,6 +206,7 @@ class Controller{
 
             let postData = await Post.findAll({
                 include:Tag,
+                order: [['createdAt', 'desc']]
             })
             res.render("post", {role, postData, idUser, deletedPostName, publishedDate})
         } catch (error) {
@@ -255,7 +256,7 @@ class Controller{
                     await newPost.addTags(tag);
                 }
             }
-            res.redirect("/user/post")
+            res.redirect("/users/post")
         } catch (error) {
             console.log(error)
             if (error.name == "SequelizeValidationError") {
