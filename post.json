@@ -2,14 +2,14 @@
     {
       "title": "First Post",
       "shortDescription": "This is a short description for the first post.",
-      "image": "/images/first_post.jpg",
+      "image": "/uploads/image-1710994184042-603569893",
       "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non nibh vel nisi dignissim tristique.",
       "UserId": 1
     },
     {
       "title": "Second Post",
       "shortDescription": "This is a short description for the second post.",
-      "image": "/images/second_post.jpg",
+      "image": "/uploads/image-1710994184042-603569893",
       "content": "Integer luctus tincidunt mauris nec laoreet. Vivamus efficitur, est vel cursus ultricies, sem risus iaculis leo, vel viverra purus magna sit amet eros.",
       "UserId": 2
     }
