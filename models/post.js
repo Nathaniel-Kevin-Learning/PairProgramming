@@ -16,10 +16,64 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    title: DataTypes.STRING,
-    shortDescription: DataTypes.TEXT,
-    image: DataTypes.STRING,
-    content: DataTypes.TEXT,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg:'title is required'
+        },
+        notEmpty:{
+          msg:'title is required'
+        }
+      }
+    },
+    shortDescription: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg:'shortDescription is required'
+        },
+        notEmpty:{
+          msg:'shortDescription is required'
+        },
+        maximalWord(value){
+          if (value.length>50) {
+            throw new Error("maximal character is 50 words")
+          }
+        },
+      }
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg:'image is required'
+        },
+        notEmpty:{
+          msg:'image is required'
+        }
+      }
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg:'content is required'
+        },
+        notEmpty:{
+          msg:'content is required'
+        },
+        minimalWord(value){
+          if (value.length<10) {
+            throw new Error("minimal character content is 10 words")
+          }
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

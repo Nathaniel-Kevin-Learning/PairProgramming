@@ -211,9 +211,48 @@ class Controller{
 
     static async addPostForm(req,res){
         try {
-            
+            let idTarget = req.session.userId;
+            let role = req.session.role;
+            let errorMessage = req.query.error;
+            if (errorMessage) {
+                errorMessage = errorMessage.split(',')
+            }
+            let tags = await Tag.findAll();
+            res.render('post-add', {role, errorMessage, tags})
         } catch (error) {
+            console.log(error)
             res.send(error)
+        }
+    }
+
+    static async savePostForm(req,res){
+        try {
+            let idTarget = req.session.userId;
+
+            let data = req.body;
+            console.log(data)
+            let imagePath
+            console.log(req.file , "data file")
+            if (req.file) {
+                imagePath = '/uploads/' + req.file.filename;
+            }
+            let newPost = await Post.create({
+                title: data.title,
+                shortDescription: data.shortDescription,
+                image: imagePath,
+                content: data.content,
+                UserId: idTarget,
+            })
+            res.send(data)
+        } catch (error) {
+            if (error.name = "SequelizeValidationError") {
+                let msg = error.errors.map((el)=>{
+                    return el.message
+                })
+                res.redirect(`/users/post/add?error=${msg}`)
+            }else{
+                res.send(error.message)
+            }
         }
     }
 }
