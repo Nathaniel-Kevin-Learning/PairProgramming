@@ -18,7 +18,7 @@ class Controller{
             
             res.render("register-page", {errorMessage});
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             res.send(error);
         }
     }
@@ -54,7 +54,7 @@ class Controller{
             
             res.redirect("/")
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             res.redirect(`/register?error=${error.message}`)
         }
     }
@@ -94,7 +94,7 @@ class Controller{
             throw new Error("Email not found please try again")
            }
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             res.redirect(`/login?error=${error.message}`)
         }
     }
@@ -164,7 +164,7 @@ class Controller{
             let data = await UserDetail.findAll({where:{
                 UserId: idTarget
             }})
-            console.log(data)
+            // console.log(data)
             await UserDetail.update({ 
                 fullName: newData.fullName,
                 address: newData.address,
@@ -180,7 +180,7 @@ class Controller{
             if (error.name == 'SequelizeValidationError') {
                 res.redirect(`/users/profile/update?error=${error.errors.message}`)
             }else{
-                console.log(error)
+                // console.log(error)
                 res.send(error)
             }
         }
@@ -225,7 +225,7 @@ class Controller{
             let tags = await Tag.findAll();
             res.render('post-add', {role, errorMessage, tags})
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             res.send(error)
         }
     }
@@ -235,7 +235,7 @@ class Controller{
             let idTarget = req.session.userId;
 
             let data = req.body;
-            console.log(data)
+            // console.log(data)
             let imagePath
             // console.log(req.file , "data file")
             if (req.file) {
@@ -275,7 +275,7 @@ class Controller{
             let idTarget = req.session.userId;
             let role = req.session.role;
             let idPost = req.params.id;
-            console.log(req.params.id, "data ID UNTUK POST")
+            // console.log(req.params.id, "data ID UNTUK POST")
             let dataPostDetail = await Post.findAll({
                 include:[
                     { model: User,
@@ -290,7 +290,7 @@ class Controller{
             // res.send(dataPostDetail)
             res.render("post-detail", {role, dataPostDetail, formatDate})
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             res.send(error.message)
         }
     }
