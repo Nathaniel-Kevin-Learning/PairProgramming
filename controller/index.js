@@ -159,7 +159,6 @@ class Controller{
     static async editProfile(req,res){
         try {
             let idTarget = req.session.userId;
-            let role = req.session.role;
             let newData = req.body;
 
             let data = await UserDetail.findAll({where:{
@@ -184,6 +183,37 @@ class Controller{
                 console.log(error)
                 res.send(error)
             }
+        }
+    }
+
+    static async showUserList(req,res){
+        try {
+            let idTarget = req.session.userId;
+            let role = req.session.role;
+            let search = req.query.search
+            let data = await User.findAllUsers(UserDetail, search)
+            res.render('user-list', {role, data})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async showPost(req,res){
+        try {
+            let idTarget = req.session.userId;
+            let role = req.session.role;
+
+            res.render("post", {role})
+        } catch (error) {
+            res.send(error.message)
+        }
+    }
+
+    static async addPostForm(req,res){
+        try {
+            
+        } catch (error) {
+            res.send(error)
         }
     }
 }

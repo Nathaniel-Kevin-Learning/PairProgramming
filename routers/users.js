@@ -23,4 +23,7 @@ router.get('/profile', Controller.userProfile)
 router.get('/profile/update', Controller.updateProfileForm)
 router.post('/profile/update', Controller.editProfile)
 
+router.get('/post', Controller.showPost)
+router.get('/post/add', Controller.addPostForm)
+
 module.exports = router;

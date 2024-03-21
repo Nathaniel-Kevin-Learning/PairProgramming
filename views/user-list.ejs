@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./_header.ejs') %>
+<%- include('./_navigation-signned.ejs') %>
+<body>
+    <div class="container mt-5">
+        <h2>Search Users</h2>
+        <form class="form-inline mb-3" action="/admins/userList" method="GET">
+            <div class="form-group mr-2">
+                <input type="text" class="form-control" name="search" placeholder="Enter full name">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <h2>Users Table</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Full Name - Age</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(element => { %>    
+                    <tr>
+                        <td><%= element.id %> </td>
+                        <td><%= element.UserDetail.nameAge %></td>
+                        <td><%= element.email %></td>
+                        <td><%= element.role %></td>
+                        <td><%= element.UserDetail.gender %></td>
+                        <td><%= element.UserDetail.address %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

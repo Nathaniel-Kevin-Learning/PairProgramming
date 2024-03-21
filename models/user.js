@@ -1,5 +1,6 @@
 'use strict';
 const {bcryptData} = require("../helper")
+const { Op } = require("sequelize");
 const {
   Model
 } = require('sequelize');
@@ -14,6 +15,35 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasOne(models.UserDetail, {foreignKey:"UserId"});
       User.hasMany(models.Post,{foreignKey:"UserId"})
+    }
+
+    static findAllUsers(UserDetail, search){
+      try {
+        let data
+        if (search) {
+          data= User.findAll({
+            include: {
+              model:UserDetail,
+              where: {
+                fullName: {
+                  [Op.iLike]: `%${search}%`
+                }
+              }
+            },
+            order: [['id', 'ASC']] 
+          })
+        }else{
+          data= User.findAll({
+              include: UserDetail,
+              order: [['id', 'ASC']] 
+          })
+        }
+        return data
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+      
     }
   }
   User.init({

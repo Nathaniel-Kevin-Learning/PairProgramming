@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       UserDetail.belongsTo(models.User, {foreignKey:"UserId"})
     }
+
+    get nameAge(){
+      let data = `${this.fullName} - ${this.age ? this.age : "not filled yet"}`;
+      return data
+    }
   }
   UserDetail.init({
     fullName: {

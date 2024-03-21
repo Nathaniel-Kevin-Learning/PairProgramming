@@ -20,6 +20,7 @@ router.use(function(req,res,next){
 })
 
 router.get('/', Controller.signnedHome);
+router.get('/userList', Controller.showUserList);
 
 
 module.exports  = router

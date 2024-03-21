@@ -8,7 +8,7 @@
       "email": "user@example.com",
       "password": "usertest123",
       "role": "user"
-    }
+    },
     {
       "email": "admindummy@gmail.com",
       "password": "usertest123",
