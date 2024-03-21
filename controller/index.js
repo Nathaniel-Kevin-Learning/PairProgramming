@@ -99,11 +99,91 @@ class Controller{
         }
     }
 
-    static async adminLandingPage(req,res){
+    static async logout(req,res){
+       req.session.destroy((err)=>{
+            if (err) {
+                res.send(err) 
+            }else{
+                res.redirect('/')
+            }
+       }) 
+    }
+
+    static async signnedHome(req,res){
         try {
-            res.send("Hello this is admin page")
+            let role = req.session.role
+            res.render("signned-home", {role})
         } catch (error) {
-            res.send(error.messag)
+            res.send(error)
+        }
+        
+    }
+
+    static async userProfile(req,res){
+        try {
+            let id = req.session.userId
+            let role = req.session.role
+            // console.log(role)
+
+            let dataUser = await User.findByPk(id, {
+                attributes:['email'],
+                include: UserDetail 
+            })
+            // console.dir(dataUser, {depth:10})
+            console.log(dataUser)
+            res.render('user-profile', {role, dataUser});
+        } catch (error) {
+            res.send(error);
+        }
+    }
+
+    static async updateProfileForm(req, res){
+        try {
+            let idTarget = req.session.userId
+            let role = req.session.role
+            let errorMessage = req.query.error;
+            if (errorMessage) {
+                errorMessage = errorMessage.split(',')
+            }
+            let data = await UserDetail.findAll({where:{
+                UserId: idTarget
+            }})
+
+            console.log(data)
+            res.render("update-profile",{role, errorMessage, data})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async editProfile(req,res){
+        try {
+            let idTarget = req.session.userId;
+            let role = req.session.role;
+            let newData = req.body;
+
+            let data = await UserDetail.findAll({where:{
+                UserId: idTarget
+            }})
+            console.log(data)
+            await UserDetail.update({ 
+                fullName: newData.fullName,
+                address: newData.address,
+                gender: newData.gender,
+                age: newData.age
+            }, {
+                where: {
+                  id: data[0].id
+                }
+              });
+            res.redirect('/users/profile');
+        } catch (error) {
+            if (error.name == 'SequelizeValidationError') {
+                res.redirect(`/users/profile/update?error=${error.errors.message}`)
+            }else{
+                console.log(error)
+                res.send(error)
+            }
         }
     }
 }

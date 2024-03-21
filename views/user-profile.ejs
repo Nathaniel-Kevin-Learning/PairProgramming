@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./_header.ejs') %>
+<%- include('./_navigation-signned.ejs') %>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">User Profile</h1>
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">User Information</h5>
+                <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name:</label>
+                                <p id="fullName" class="form-control-static text-center"><strong><%= dataUser.UserDetail.fullName %></strong></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <p id="email" class="form-control-static text-center"><strong><%= dataUser.email %></strong></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age:</label>
+                                <p id="age" class="form-control-static text-center"><strong><%= dataUser.UserDetail.age ? dataUser.UserDetail.age : 'not filled yet' %></strong></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address:</label>
+                                <p id="address" class="form-control-static text-center"><strong><%= dataUser.UserDetail.address? dataUser.UserDetail.address : 'not filled yet' %></strong></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender:</label>
+                                <p id="gender" class="form-control-static text-center"><strong><%= dataUser.UserDetail.gender? dataUser.UserDetail.gender : 'not filled yet' %></strong></p>
+                            </div>
+                            <a href="/users/profile/update" class="btn btn-warning">Update</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>

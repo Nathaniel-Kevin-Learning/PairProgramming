@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./_header.ejs') %>
+<%- include('./_navigation-signned.ejs') %>
+<body>
+    <div class="container mt-5">
+        <% if (errorMessage) { %>
+            <% errorMessage.forEach(element => { %>
+                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                    <strong><%= element %></strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% }) %>
+        <% } %>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                Update Profile
+              </div>
+              <div class="card-body">
+                <form action="/users/profile/update" method="post">
+                <% data.forEach(element => { %>
+                    <div class="form-group">
+                      <label for="fullName">Full Name</label>
+                      <input type="text" class="form-control" id="fullName" placeholder="Enter full name" name="fullName" value="<%= element.fullName %>">
+                    </div>
+                    <div class="form-group">
+                      <label for="age">Age</label>
+                      <input type="number" class="form-control" id="age" placeholder="Enter age" name="age" value="<%= element.age %>">
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" value="<%= element.address %>">
+                    </div>
+                    <div class="form-group">
+                      <label for="gender">Gender</label>
+                      <select class="form-control" id="gender" name="gender">
+                        <% ["Male","Female","Other"].forEach(el => { %>
+                            <% if (el == element.gender) { %>
+                                <option value="<%= el %>"><%= el %></option>
+                              <% } else { %>
+                                <option value="<%= el %>"><%= el %></option>
+                            <% } %>
+                        <% }) %>
+                        
+                      </select>
+                    </div>
+                    <div class="text-center">
+                      <a href="/users/profile" class="btn btn-danger">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                <% }) %>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

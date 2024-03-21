@@ -1,5 +1,6 @@
 'use strict';
 const fs = require("fs")
+const {bcryptData} = require("../helper")
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -14,8 +15,9 @@ module.exports = {
     */
     let dataUser = JSON.parse(fs.readFileSync("./user.json", "utf-8"))
     let refinedData = dataUser.map((el)=>{
-     el.createdAt = el.updatedAt = new Date()
-     return el
+      el.password = bcryptData(el.password)
+      el.createdAt = el.updatedAt = new Date()
+      return el
     })
     
     await queryInterface.bulkInsert('Users', refinedData, {})

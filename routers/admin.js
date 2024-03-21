@@ -1,3 +1,5 @@
+const Controller = require('../controller')
+
 const router = require('express').Router()
 
 
@@ -6,19 +8,18 @@ router.use(function(req,res,next){
         let message = "Sorry but you need to login first"
         res.redirect(`/login?error=${message}`)
     }else{
-        console.log("Hit admins")
-        console.log(req.session, "session")
         if (req.session.role == "admin") {
             next()
-        }else{
+        }else if (req.session.role == "user"){
             res.redirect(`/users`)
+        }else{
+            let message = "Sorry but you need to login first"
+            res.redirect(`/login?error=${message}`)
         }
     }
 })
 
-router.get('/', (req,res)=>{
-    res.send("Hello this is admin page")
-});
+router.get('/', Controller.signnedHome);
 
 
 module.exports  = router

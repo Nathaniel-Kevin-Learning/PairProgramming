@@ -2,10 +2,10 @@ const Controller = require('../controller');
 const router = require('express').Router();
 
 
-router.use(function(req,res,next){
-    console.log(req.session, "dari middleware")
-    next()
-})
+// router.use(function(req,res,next){
+//     console.log(req.session, "dari middleware")
+//     next()
+// })
 
 router.get('/', Controller.landingPage);
 
@@ -14,6 +14,8 @@ router.post('/register', Controller.saveForm)
 
 router.get('/login', Controller.loginPage)
 router.post('/login', Controller.checkLogin)
+
+router.get('/logout', Controller.logout)
 
 router.get('/check', (req,res)=>{
     console.log(req.session)

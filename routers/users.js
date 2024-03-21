@@ -1,5 +1,6 @@
 // users.js
 const express = require('express');
+const Controller = require('../controller');
 const router = express.Router();
 
 router.use(function(req,res,next){
@@ -7,18 +8,19 @@ router.use(function(req,res,next){
         let message = "Sorry but you need to login first"
         res.redirect(`/login?error=${message}`)
     }else{
-        console.log("Hit user")
-        console.log(req.session)
-        if (req.session.role == "user") {
+        if (req.session.role == "user" || req.session.role == "admin") {
             next()
         }else{
-            res.redirect(`/admins`)
+            let message = "Sorry but you need to login first"
+            res.redirect(`/login?error=${message}`)
         }
     }
 })
 
-router.get('/', (req, res) => {
-  res.send('Users Page');
-});
+router.get('/', Controller.signnedHome);
+
+router.get('/profile', Controller.userProfile)
+router.get('/profile/update', Controller.updateProfileForm)
+router.post('/profile/update', Controller.editProfile)
 
 module.exports = router;
