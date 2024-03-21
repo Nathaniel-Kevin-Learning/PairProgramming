@@ -1,5 +1,5 @@
 
-const {User, Post, Tag, UserDetail} = require("../models")
+const {User, Post, Tag, PostTag, UserDetail} = require("../models")
 var bcrypt = require('bcryptjs');
 
 
@@ -232,10 +232,11 @@ class Controller{
             let data = req.body;
             console.log(data)
             let imagePath
-            console.log(req.file , "data file")
+            // console.log(req.file , "data file")
             if (req.file) {
                 imagePath = '/uploads/' + req.file.filename;
             }
+
             let newPost = await Post.create({
                 title: data.title,
                 shortDescription: data.shortDescription,
@@ -243,15 +244,23 @@ class Controller{
                 content: data.content,
                 UserId: idTarget,
             })
-            res.send(data)
+
+            let tag = req.body.tag
+            if (tag) {
+                if (tag.length != 0) {
+                    await newPost.addTags(tag);
+                }
+            }
+            res.redirect("/user/post")
         } catch (error) {
-            if (error.name = "SequelizeValidationError") {
+            console.log(error)
+            if (error.name == "SequelizeValidationError") {
                 let msg = error.errors.map((el)=>{
                     return el.message
                 })
                 res.redirect(`/users/post/add?error=${msg}`)
             }else{
-                res.send(error.message)
+                res.redirect(`/users/post/add?error=${error}`)
             }
         }
     }
