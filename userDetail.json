@@ -12,5 +12,12 @@
       "gender": "Female",
       "age": 25,
       "UserId": 2
+    },
+    {
+      "fullName": "Kevin User",
+      "address": "PHG",
+      "gender": "Male",
+      "age": 25,
+      "UserId": 3
     }
   ]
