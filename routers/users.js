@@ -43,5 +43,6 @@ router.post('/profile/update', Controller.editProfile)
 router.get('/post', Controller.showPost)
 router.get('/post/add', Controller.addPostForm)
 router.post('/post/add', upload.single('image'), Controller.savePostForm)
-
+router.get('/post/detail/:id', Controller.postDetails)
+router.get('/post/delete/:id', Controller.deletePost)
 module.exports = router;

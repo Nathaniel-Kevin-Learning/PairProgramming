@@ -1,7 +1,7 @@
 
 const {User, Post, Tag, PostTag, UserDetail} = require("../models")
 var bcrypt = require('bcryptjs');
-
+const {publishedDate, formatDate} = require("../helper")
 
 class Controller{
     static async landingPage(req,res){
@@ -200,10 +200,14 @@ class Controller{
 
     static async showPost(req,res){
         try {
-            let idTarget = req.session.userId;
+            let idUser = req.session.userId;
             let role = req.session.role;
+            let deletedPostName = req.query.deleted;
 
-            res.render("post", {role})
+            let postData = await Post.findAll({
+                include:Tag,
+            })
+            res.render("post", {role, postData, idUser, deletedPostName, publishedDate})
         } catch (error) {
             res.send(error.message)
         }
@@ -262,6 +266,46 @@ class Controller{
             }else{
                 res.redirect(`/users/post/add?error=${error}`)
             }
+        }
+    }
+
+    static async postDetails(req,res){
+        try {
+            let idTarget = req.session.userId;
+            let role = req.session.role;
+            let idPost = req.params.id;
+            console.log(req.params.id, "data ID UNTUK POST")
+            let dataPostDetail = await Post.findAll({
+                include:[
+                    { model: User,
+                      include: UserDetail
+                    },
+                    { model: Tag }
+                ],
+                where: {
+                    id: idPost
+                }
+            })
+            // res.send(dataPostDetail)
+            res.render("post-detail", {role, dataPostDetail, formatDate})
+        } catch (error) {
+            console.log(error)
+            res.send(error.message)
+        }
+    }
+
+    static async deletePost(req, res){
+        try {
+            let idPost = req.params.id;
+            let post = await Post.findByPk(idPost)
+
+            await post.setTags([])
+            let deletedPostName = post.title
+            await post.destroy();
+
+            res.redirect(`/users/post?deleted=${deletedPostName}`)
+        } catch (error) {
+            res.send(error)
         }
     }
 }

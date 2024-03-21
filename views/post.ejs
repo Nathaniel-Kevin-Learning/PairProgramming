@@ -11,83 +11,42 @@
         </div>
         
         <h2>Recent Post</h2>
+        <!-- deletedPostName -->
+        <% if (deletedPostName) { %>
+            <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                <strong>The post named <%= deletedPostName %> Has been deleted</strong> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
         <!-- Post Cards -->
         <div class="row">
           <!-- Card 1 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Post Title 1</h5>
-                <p class="card-text">Post Description Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <!-- Buttons -->
-                <div class="mt-3">
-                  <a href="#" class="btn btn-info mr-2">See Details</a>
-                  <a href="#" class="btn btn-danger">Delete</a>
+          <% postData.forEach(element => { %>
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                    <img src="<%= element.image%>" alt="" class="img-fluid mb-3">
+                  <h5 class="card-title"><%= element.title %></h5>
+                  <p class="card-text"><%= element.shortDescription %></p>
+                  <p class="card-text"><%= publishedDate(element.createdAt) %></p>
+                  <p class="card-text"> Tags: 
+                  <% element.Tags.forEach(el => { %>
+                    <a href="" class="btn btn-outline-secondary btn-sm disabled mx-1"><%= el.name%></a>
+                  <% }) %>
+                  </p>
+                  <!-- Buttons -->
+                  <div class="mt-3">
+                    <a href="/users/post/detail/<%= element.id %>" class="btn btn-info mr-2">See Details</a>
+                    <% if (element.UserId == idUser) { %>
+                        <a href="/users/post/delete/<%= element.id %>" class="btn btn-danger">Delete</a>
+                    <% } %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-      
-          <!-- Card 2 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Post Title 2</h5>
-                <p class="card-text">Post Description Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <!-- Buttons -->
-                <div class="mt-3">
-                  <a href="#" class="btn btn-info mr-2">See Details</a>
-                  <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Card 3 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Post Title 3</h5>
-                <p class="card-text">Post Description Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <!-- Buttons -->
-                <div class="mt-3">
-                  <a href="#" class="btn btn-info mr-2">See Details</a>
-                  <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Repeat Cards for additional posts -->
-          <!-- Card 4 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Post Title 4</h5>
-                <p class="card-text">Post Description Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <!-- Buttons -->
-                <div class="mt-3">
-                  <a href="#" class="btn btn-info mr-2">See Details</a>
-                  <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Card 5 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Post Title 5</h5>
-                <p class="card-text">Post Description Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <!-- Buttons -->
-                <div class="mt-3">
-                  <a href="#" class="btn btn-info mr-2">See Details</a>
-                  <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <% }) %>
       
           <!-- Add more cards for additional posts -->
         </div>

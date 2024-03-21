@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./_header.ejs') %>
+<%- include('./_navigation-signned.ejs') %>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <% dataPostDetail.forEach(element => { %>
+             
+                    <img src="<%= element.image %>" alt="Post Image" class="img-fluid mb-5 d-block mx-auto" style="width: 50%;"> 
+                    
+                    <h2 class="card-title"><%= element.title %></h2>
+                    <p class="card-text"><%= element.content %></p>
+                    
+                    <p class="card-text">Author of the post:<%= element.User.UserDetail.fullName %></p>
+                    
+                    <p class="card-text">Tags: 
+                        <% element.Tags.forEach(element => { %>
+                            <span class="badge badge-primary"><%= element.name %></span>
+                        <% }) %>
+                    </p>
+                    <p class="card-text"><%= formatDate(element.createdAt) %></p>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
